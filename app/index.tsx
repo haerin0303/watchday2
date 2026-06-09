@@ -1,0 +1,44 @@
+import { useEffect } from "react";
+
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+
+import { Logo } from "@/components/Logo";
+import { Screen } from "@/components/Screen";
+import { colors, typography } from "@/theme/colors";
+
+export default function SplashScreen() {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.replace("/home");
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <Screen>
+      <StatusBar style="light" />
+      <View style={styles.container}>
+        <Logo large />
+        <Text style={styles.subtitle}>학교 생활을 한눈에</Text>
+      </View>
+    </Screen>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  subtitle: {
+    marginTop: 14,
+    color: colors.soft,
+    fontSize: 14,
+    fontFamily: typography.medium,
+    letterSpacing: 0.8
+  }
+});

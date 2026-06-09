@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "WatchDay",
+    "slug": "watchday2",
+    "scheme": "watchday2",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-router"],
+    "android": {
+      "package": "com.watchday.app"
+    },
+    "ios": {
+      "supportsTablet": false
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
