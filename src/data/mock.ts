@@ -20,6 +20,7 @@ export const todoItems = [
   {
     id: "t1",
     title: "수학 숙제 제출",
+    subject: "수학",
     description: "수학 문제집 35페이지까지 풀고 제출하기.",
     due: "2026-06-10",
     status: "진행 중",
@@ -28,6 +29,7 @@ export const todoItems = [
   {
     id: "t2",
     title: "영어 단어 암기",
+    subject: "영어",
     description: "이번 주 단어 40개 복습 후 테스트 준비.",
     due: "2026-06-09",
     status: "진행 중",
@@ -36,6 +38,7 @@ export const todoItems = [
   {
     id: "t3",
     title: "과학 보고서 정리",
+    subject: "과학",
     description: "실험 결과 사진과 결론을 한 페이지로 정리.",
     due: "2026-06-12",
     status: "대기",
@@ -44,6 +47,7 @@ export const todoItems = [
   {
     id: "t4",
     title: "가방 챙기기",
+    subject: "기타",
     description: "교과서, 충전기, 체육복 확인.",
     due: "2026-06-09",
     status: "완료",

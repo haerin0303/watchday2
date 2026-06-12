@@ -68,17 +68,18 @@ const styles = StyleSheet.create({
     fontFamily: typography.medium
   },
   menuArea: {
-    gap: 18,
+    gap: 14,
     marginTop: 16
   },
   footer: {
     alignItems: "center",
     paddingBottom: 0,
-    width: "100%",
-    paddingHorizontal: 14
+    // width: "100%",
+    // paddingHorizontal: 14,
+    marginTop: 8
   },
   footerButtonWrap: {
-    width: "74%"
+    width: "100%"
   }
   
 });

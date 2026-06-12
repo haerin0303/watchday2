@@ -13,28 +13,10 @@ export default function TodoDetailScreen() {
   return (
     <Screen contentStyle={styles.screen}>
       <PageTransition>
-        <View style={styles.header}>
-          <Text style={styles.title}>할 일 상세</Text>
+        <View style={styles.centerFull}>
+          <Text style={styles.bigTitle}>{todo?.title}</Text>
+          <Text style={styles.smallSub}>{todo?.description ?? todo?.due}</Text>
         </View>
-
-        <View style={styles.card}>
-          <Text style={styles.itemTitle}>{todo?.title}</Text>
-          <Text style={styles.description}>{todo?.description}</Text>
-
-          <View style={styles.metaBlock}>
-            <Text style={styles.metaLabel}>마감일</Text>
-            <Text style={styles.metaValue}>{todo?.due}</Text>
-          </View>
-
-          <View style={styles.metaBlock}>
-            <Text style={styles.metaLabel}>상태</Text>
-            <Text style={styles.metaValue}>{todo?.status}</Text>
-          </View>
-        </View>
-
-        <Pressable style={styles.backButton} onPress={() => router.back()}>
-          <Text style={styles.backText}>돌아가기</Text>
-        </Pressable>
       </PageTransition>
     </Screen>
   );
@@ -51,7 +33,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.white,
-    fontSize: 24,
+    fontSize: 20,
     fontFamily: typography.bold
   },
   card: {
@@ -71,11 +53,12 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   description: {
-    color: colors.white,
+    color: colors.soft,
     fontSize: 14,
     lineHeight: 20,
     textAlign: "center",
-    fontFamily: typography.medium
+    fontFamily: typography.medium,
+    marginTop: 8
   },
   metaBlock: {
     alignItems: "center",
@@ -96,11 +79,39 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 14
+    paddingVertical: 14,
+    marginTop: 20
   },
   backText: {
     color: colors.gold,
     fontSize: 14,
+    fontFamily: typography.medium
+  },
+  centerContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8
+  }
+  ,
+  centerFull: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  bigTitle: {
+    color: colors.gold,
+    fontSize: 28,
+    lineHeight: 34,
+    fontFamily: typography.bold,
+    textAlign: "center"
+  },
+  smallSub: {
+    color: colors.soft,
+    fontSize: 14,
+    lineHeight: 20,
+    marginTop: 16,
+    textAlign: "center",
     fontFamily: typography.medium
   }
 });

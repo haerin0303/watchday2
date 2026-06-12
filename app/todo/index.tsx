@@ -8,6 +8,19 @@ import { colors, typography } from "@/theme/colors";
 
 export default function TodoScreen() {
   const allDone = todoItems.length > 0 && todoItems.every((item) => item.done);
+  const subjectColor = (subject?: string) => {
+    switch (subject) {
+      case "수학":
+        return "#6EC1FF";
+      case "영어":
+        return "#66D196";
+      case "과학":
+        return "#FF7A7A";
+      default:
+        return "#C4C4C4";
+    }
+  };
+  
 
   return (
     <Screen scroll contentStyle={styles.screen}>
@@ -28,12 +41,10 @@ export default function TodoScreen() {
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.list}
             renderItem={({ item }) => (
-              <Pressable style={styles.todoCard} onPress={() => router.push(`/todo/${item.id}`)}>
-                <View style={[styles.check, item.done && styles.checkDone]}>
-                  <Text style={styles.checkText}>{item.done ? "✓" : ""}</Text>
-                </View>
+              <Pressable style={[styles.todoCard, item.done && styles.todoCardDone]} onPress={() => router.push(`/todo/${item.id}`)}>
+                <View style={[styles.subjectDot, { backgroundColor: subjectColor((item as any).subject) }]} />
                 <View style={styles.todoTextArea}>
-                  <Text style={styles.todoTitle}>{item.title}</Text>
+                  <Text style={[styles.todoTitle, item.done && styles.todoTitleDone]}>{item.title}</Text>
                   <Text style={styles.todoSub}>{item.due}</Text>
                 </View>
               </Pressable>
@@ -82,7 +93,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.borderSoft,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginRight: 12
+  },
+  todoCardDone: {
+    opacity: 0.45
+  },
+  subjectDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 8,
+    marginRight: 12
   },
   checkDone: {
     borderColor: colors.gold,
@@ -102,8 +123,13 @@ const styles = StyleSheet.create({
     fontFamily: typography.medium,
     lineHeight: 19
   },
+  todoTitleDone: {
+    textDecorationLine: "line-through"
+  },
+  
   todoSub: {
     color: colors.soft,
+  
     fontSize: 11,
     fontFamily: typography.medium,
     marginTop: 4
