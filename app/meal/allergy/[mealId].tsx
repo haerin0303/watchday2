@@ -1,27 +1,66 @@
 import { router, useLocalSearchParams } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
-import { todayMeal } from "@/data/mock";
+import { getCachedTodayMeal, loadTodayMeal, MealData } from "@/services/meal";
+import { usePhoneViewTarget } from "@/services/phoneView";
 import { colors, typography } from "@/theme/colors";
 
 export default function MealAllergyDetailScreen() {
+  usePhoneViewTarget("meal");
+
   const params = useLocalSearchParams<{ mealId?: string }>();
-  const menu = todayMeal.items.find((item) => item.id === params.mealId) ?? todayMeal.items[0];
+  const [meal, setMeal] = useState<MealData | null>(() => getCachedTodayMeal());
+  const [fallbackText, setFallbackText] = useState("불러오는 중");
+
+  useEffect(() => {
+    if (meal) {
+      return;
+    }
+
+    let active = true;
+
+    async function loadMeal() {
+      try {
+        const nextMeal = await loadTodayMeal();
+
+        if (active) {
+          setMeal(nextMeal);
+          setFallbackText("알레르기 정보 없음");
+        }
+      } catch (error) {
+        console.log("[meal] allergy load failed:", error);
+
+        if (active) {
+          setFallbackText("급식 정보를 불러오지 못했어요");
+        }
+      }
+    }
+
+    loadMeal();
+
+    return () => {
+      active = false;
+    };
+  }, [meal]);
+
+  const menu = useMemo(() => meal?.items.find((item) => item.id === params.mealId) ?? meal?.items[0] ?? null, [meal?.items, params.mealId]);
+  const allergyText = menu ? `${menu.name} - ${menu.allergyNumbers}` : fallbackText;
 
   return (
     <Screen contentStyle={styles.screen}>
       <PageTransition>
         <View style={styles.header}>
           <Text style={styles.title}>알레르기 정보</Text>
-          <Text style={styles.subtitle}>{menu?.name}</Text>
+          <Text style={styles.subtitle}>{menu?.name ?? ""}</Text>
         </View>
 
         <View style={styles.card}>
           <Text style={styles.label}>알레르기 번호</Text>
-          <Text style={styles.value}>{menu?.allergyNumbers}</Text>
-          <Text style={styles.note}>{menu?.warning}</Text>
+          <Text style={styles.value}>{allergyText}</Text>
+          <Text style={styles.note}>{menu?.warning ?? fallbackText}</Text>
         </View>
 
         <Pressable style={styles.closeButton} onPress={() => router.back()}>

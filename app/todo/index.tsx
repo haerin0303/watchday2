@@ -1,26 +1,50 @@
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
-import { todoItems } from "@/data/mock";
+import { usePhoneViewTarget } from "@/services/phoneView";
+import { loadTodoItems, TodoItem } from "@/services/todo";
 import { colors, typography } from "@/theme/colors";
+import { getSubjectColor } from "@/theme/subjectColors";
 
 export default function TodoScreen() {
-  const allDone = todoItems.length > 0 && todoItems.every((item) => item.done);
-  const subjectColor = (subject?: string) => {
-    switch (subject) {
-      case "수학":
-        return "#6EC1FF";
-      case "영어":
-        return "#66D196";
-      case "과학":
-        return "#FF7A7A";
-      default:
-        return "#C4C4C4";
+  usePhoneViewTarget("tasks");
+
+  const [todoItems, setTodoItems] = useState<TodoItem[]>([]);
+  const [message, setMessage] = useState("불러오는 중");
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadTodos() {
+      try {
+        setMessage("불러오는 중");
+        const items = await loadTodoItems();
+
+        if (active) {
+          setTodoItems(items);
+          setMessage(items.length > 0 ? "" : "등록된 할 일이 없어요");
+        }
+      } catch (error) {
+        console.log("[todo] load failed:", error);
+
+        if (active) {
+          setTodoItems([]);
+          setMessage("할 일을 불러오지 못했어요");
+        }
+      }
     }
-  };
-  
+
+    loadTodos();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const allDone = todoItems.length === 0;
 
   return (
     <Screen scroll contentStyle={styles.screen}>
@@ -31,8 +55,7 @@ export default function TodoScreen() {
 
         {allDone ? (
           <View style={styles.doneBox}>
-            <Text style={styles.doneTitle}>집가기</Text>
-            <Text style={styles.doneSubtitle}>남음없기</Text>
+            <Text style={styles.doneTitle}>{message}</Text>
           </View>
         ) : (
           <FlatList
@@ -40,15 +63,19 @@ export default function TodoScreen() {
             scrollEnabled={false}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.list}
-            renderItem={({ item }) => (
-              <Pressable style={[styles.todoCard, item.done && styles.todoCardDone]} onPress={() => router.push(`/todo/${item.id}`)}>
-                <View style={[styles.subjectDot, { backgroundColor: subjectColor((item as any).subject) }]} />
-                <View style={styles.todoTextArea}>
-                  <Text style={[styles.todoTitle, item.done && styles.todoTitleDone]}>{item.title}</Text>
-                  <Text style={styles.todoSub}>{item.due}</Text>
-                </View>
-              </Pressable>
-            )}
+            renderItem={({ item }) => {
+              const subjectColor = getSubjectColor(item.subject);
+
+              return (
+                <Pressable style={[styles.todoCard, item.done && styles.todoCardDone]} onPress={() => router.push(`/todo/${item.id}`)}>
+                  <View style={[styles.subjectDot, { backgroundColor: subjectColor }]} />
+                  <View style={styles.todoTextArea}>
+                    <Text style={[styles.todoSub, { color: subjectColor, marginTop: 0, marginBottom: 2 }]}>{item.subject}</Text>
+                    <Text style={[styles.todoTitle, { color: subjectColor }, item.done && styles.todoTitleDone]}>{item.title}</Text>
+                  </View>
+                </Pressable>
+              );
+            }}
           />
         )}
       </PageTransition>

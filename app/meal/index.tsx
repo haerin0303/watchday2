@@ -1,28 +1,68 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
-import { todayMeal } from "@/data/mock";
+import { loadTodayMeal, MealData } from "@/services/meal";
+import { usePhoneViewTarget } from "@/services/phoneView";
 import { colors, typography } from "@/theme/colors";
 
 export default function MealScreen() {
+  usePhoneViewTarget("meal");
+
+  const [meal, setMeal] = useState<MealData | null>(null);
+  const [message, setMessage] = useState("불러오는 중");
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadMeal() {
+      try {
+        setMessage("불러오는 중");
+        const nextMeal = await loadTodayMeal();
+
+        if (!active) {
+          return;
+        }
+
+        setMeal(nextMeal);
+        setMessage(nextMeal.existence && !nextMeal.rest && nextMeal.items.length > 0 ? "" : "오늘 급식이 없어요");
+      } catch (error) {
+        console.log("[meal] load failed:", error);
+
+        if (active) {
+          setMeal(null);
+          setMessage("급식 정보를 불러오지 못했어요");
+        }
+      }
+    }
+
+    loadMeal();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const items = meal?.items ?? [];
+
   return (
     <Screen scroll contentStyle={styles.screen}>
       <PageTransition>
         <View style={styles.header}>
           <Text style={styles.title}>급식</Text>
-          <Text style={styles.date}>{todayMeal.date}</Text>
+          <Text style={styles.date}>{meal?.date ?? ""}</Text>
         </View>
 
-        {todayMeal.items.length === 0 ? (
+        {items.length === 0 ? (
           <View style={styles.emptyBox}>
-            <Text style={styles.emptyText}>등록된 급식이 없습니다.</Text>
+            <Text style={styles.emptyText}>{message}</Text>
           </View>
         ) : (
           <FlatList
-            data={todayMeal.items}
+            data={items}
             scrollEnabled={false}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.list}

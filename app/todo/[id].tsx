@@ -1,21 +1,64 @@
-import { router, useLocalSearchParams } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
-import { todoItems } from "@/data/mock";
+import { usePhoneViewTarget } from "@/services/phoneView";
+import { getCachedTodoItems, loadTodoItems, TodoItem } from "@/services/todo";
 import { colors, typography } from "@/theme/colors";
+import { getSubjectColor } from "@/theme/subjectColors";
 
 export default function TodoDetailScreen() {
+  usePhoneViewTarget("tasks");
+
   const params = useLocalSearchParams<{ id?: string }>();
-  const todo = todoItems.find((item) => item.id === params.id) ?? todoItems[0];
+  const [todoItems, setTodoItems] = useState<TodoItem[]>(() => getCachedTodoItems());
+  const [message, setMessage] = useState("불러오는 중");
+
+  useEffect(() => {
+    if (todoItems.length > 0) {
+      return;
+    }
+
+    let active = true;
+
+    async function loadTodos() {
+      try {
+        const items = await loadTodoItems();
+
+        if (active) {
+          setTodoItems(items);
+          setMessage("등록된 할 일이 없어요");
+        }
+      } catch (error) {
+        console.log("[todo] detail load failed:", error);
+
+        if (active) {
+          setMessage("할 일을 불러오지 못했어요");
+        }
+      }
+    }
+
+    loadTodos();
+
+    return () => {
+      active = false;
+    };
+  }, [todoItems.length]);
+
+  const todo = useMemo(() => todoItems.find((item) => item.id === params.id) ?? todoItems[0] ?? null, [params.id, todoItems]);
+  const subjectColor = getSubjectColor(todo?.subject);
+  const detailText = todo
+    ? [todo.description, todo.due, todo.period].filter((value) => value.length > 0).join("\n")
+    : message;
 
   return (
     <Screen contentStyle={styles.screen}>
       <PageTransition>
         <View style={styles.centerFull}>
-          <Text style={styles.bigTitle}>{todo?.title}</Text>
-          <Text style={styles.smallSub}>{todo?.description ?? todo?.due}</Text>
+          <Text style={[styles.bigTitle, { color: subjectColor }]}>{todo?.title ?? message}</Text>
+          <Text style={styles.smallSub}>{detailText}</Text>
         </View>
       </PageTransition>
     </Screen>

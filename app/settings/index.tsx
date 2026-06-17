@@ -1,9 +1,10 @@
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { Logo } from "@/components/Logo";
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
 import { useAuth } from "@/context/AuthContext";
+import { openCurrentPhoneView } from "@/services/phoneView";
 import { colors, typography } from "@/theme/colors";
 
 export default function SettingsScreen() {
@@ -22,10 +23,7 @@ export default function SettingsScreen() {
           <Text style={styles.cardText}>{user?.email ?? "로그인 정보를 확인할 수 없습니다."}</Text>
         </View>
 
-        <Pressable
-          style={styles.phoneButton}
-          onPress={() => Alert.alert("폰에서 보기", "추후 폰 앱과 연결되는 동작을 여기에 연결할 수 있습니다.")}
-        >
+        <Pressable style={styles.phoneButton} onPress={openCurrentPhoneView}>
           <Text style={styles.phoneButtonText}>폰에서 보기</Text>
         </Pressable>
 

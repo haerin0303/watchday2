@@ -5,9 +5,12 @@ import { StyleSheet, Text, View } from "react-native";
 import { PageTransition } from "@/components/PageTransition";
 import { PillButton } from "@/components/PillButton";
 import { Screen } from "@/components/Screen";
+import { usePhoneViewTarget } from "@/services/phoneView";
 import { colors, typography } from "@/theme/colors";
 
 export default function HomeScreen() {
+  usePhoneViewTarget("home");
+
   return (
     <Screen contentStyle={styles.screen}>
       <PageTransition>
