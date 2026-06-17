@@ -71,7 +71,7 @@ export default function TodoScreen() {
                   <View style={[styles.subjectDot, { backgroundColor: subjectColor }]} />
                   <View style={styles.todoTextArea}>
                     <Text style={[styles.todoSub, { color: subjectColor, marginTop: 0, marginBottom: 2 }]}>{item.subject}</Text>
-                    <Text style={[styles.todoTitle, { color: subjectColor }, item.done && styles.todoTitleDone]}>{item.title}</Text>
+                    <Text style={[styles.todoTitle, item.done && styles.todoTitleDone]}>{item.title}</Text>
                   </View>
                 </Pressable>
               );

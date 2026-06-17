@@ -15,7 +15,7 @@ type PillButtonProps = {
 export function PillButton({ label, icon, onPress, variant = "primary" }: PillButtonProps) {
   if (variant === "ghost") {
     return (
-      <Pressable style={[styles.base, styles.ghost]} onPress={onPress} android_ripple={{ color: "rgba(216,154,74,0.14)" }}>
+      <Pressable style={[styles.base, styles.ghost]} onPress={onPress} android_ripple={{ color: colors.backgroundFourth }}>
         <View style={styles.row}>
           {icon ? <View style={styles.iconBadgeGhost}>{icon}</View> : null}
           <Text style={styles.ghostLabel}>{label}</Text>
@@ -25,8 +25,8 @@ export function PillButton({ label, icon, onPress, variant = "primary" }: PillBu
   }
 
   return (
-    <Pressable style={styles.pressable} onPress={onPress} android_ripple={{ color: "rgba(0,0,0,0.12)" }}>
-      <LinearGradient colors={["#FFB163", "#FF9933", "#C67728"]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0.15 }} style={[styles.base, styles.primary]}>
+    <Pressable style={styles.pressable} onPress={onPress} android_ripple={{ color: colors.brandSecondary }}>
+      <LinearGradient colors={[colors.brandPrimary, colors.brandPrimary, colors.brandSecondary]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0.15 }} style={[styles.base, styles.primary]}>
         <View style={styles.row}>
           {icon ? <View style={styles.iconBadge}>{icon}</View> : null}
           <Text style={styles.primaryLabel}>{label}</Text>
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   primary: {
-    borderColor: "rgba(255, 255, 255, 0.04)"
+    borderColor: colors.borderPrimary
   },
   ghost: {
-    backgroundColor: "#191919",
-    borderColor: "rgba(255,255,255,0.02)"
+    backgroundColor: colors.backgroundSecondary,
+    borderColor: colors.borderPrimary
   },
   row: {
     flexDirection: "row",
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: "rgba(0,0,0,0.12)",
+    backgroundColor: colors.brandSecondary,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: "rgba(255,255,255,0.025)",
+    backgroundColor: colors.backgroundThird,
     alignItems: "center",
     justifyContent: "center"
   },
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.1
   },
   ghostLabel: {
-    color: "rgba(255,255,255,0.42)",
+    color: colors.textSecondary,
     fontSize: 13,
     fontFamily: typography.bold
   }

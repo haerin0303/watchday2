@@ -352,7 +352,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2
   },
   timeLabel: {
-    color: "rgba(255,255,255,0.55)",
+    color: colors.textSecondary,
     fontSize: 13,
     fontFamily: typography.medium,
     letterSpacing: 0.1
@@ -364,21 +364,21 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -8 }]
   },
   period: {
-    color: "#FF6A45",
+    color: colors.brandPrimary,
     fontSize: 13,
     fontFamily: typography.medium,
     marginBottom: 10,
     letterSpacing: 0.1
   },
   subject: {
-    color: "#FF6A45",
+    color: colors.brandPrimary,
     fontSize: 52,
     lineHeight: 60,
     fontFamily: typography.bold,
     textAlign: "center"
   },
   room: {
-    color: "rgba(255,255,255,0.48)",
+    color: colors.textSecondary,
     fontSize: 15,
     marginTop: 10,
     fontFamily: typography.medium

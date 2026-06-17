@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     fontFamily: typography.bold
   },
   errorText: {
-    color: "#FF9D9D",
+    color: colors.calendarTomato,
     fontSize: 12,
     lineHeight: 17,
     textAlign: "center",

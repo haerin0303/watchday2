@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     fontFamily: typography.medium
   },
   errorText: {
-    color: "#FF9D9D",
+    color: colors.calendarTomato,
     fontSize: 13,
     lineHeight: 18,
     textAlign: "center",

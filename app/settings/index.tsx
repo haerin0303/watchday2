@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: 13,
     height: 36,
-    backgroundColor: "#FF8A1C"
+    backgroundColor: colors.brandPrimary
   },
   logoMarkTop: {
     position: "absolute",
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: 36,
     height: 13,
-    backgroundColor: "#FF8A1C"
+    backgroundColor: colors.brandPrimary
   },
   logoMarkSlash: {
     position: "absolute",
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     top: 15,
     width: 31,
     height: 13,
-    backgroundColor: "#FF8A1C",
+    backgroundColor: colors.brandPrimary,
     transform: [{ rotate: "45deg" }]
   },
   logoText: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 340,
     minHeight: 84,
-    backgroundColor: "#24211F",
+    backgroundColor: colors.backgroundThird,
     borderRadius: 999,
     flexDirection: "row",
     alignItems: "center",
