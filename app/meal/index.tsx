@@ -71,7 +71,7 @@ export default function MealScreen() {
                 <Text style={styles.menuText}>{item.name}</Text>
                 {item.allergyNumbers === "알레르기 정보 없음" ? null : (
                   <Pressable style={styles.infoButton} onPress={() => router.push(`/meal/allergy/${item.id}`)}>
-                    <Ionicons name="information-circle" size={15} color={colors.orange} />
+                    <Ionicons name="alert-circle-outline" size={16} color={colors.orange} />
                   </Pressable>
                 )}
               </View>

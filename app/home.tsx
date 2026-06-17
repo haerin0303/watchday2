@@ -21,17 +21,17 @@ export default function HomeScreen() {
         <View style={styles.menuArea}>
           <PillButton
             label="시간표"
-            icon={<Ionicons name="calendar-outline" size={16} color={colors.white} />}
+            icon={<Ionicons name="calendar-clear-outline" size={18} color={colors.white} />}
             onPress={() => router.push("/class")}
           />
           <PillButton
             label="급식"
-            icon={<Ionicons name="restaurant-outline" size={16} color={colors.white} />}
+            icon={<Ionicons name="restaurant" size={18} color={colors.white} />}
             onPress={() => router.push("/meal")}
           />
           <PillButton
             label="할 일"
-            icon={<Ionicons name="clipboard-outline" size={16} color={colors.white} />}
+            icon={<Ionicons name="clipboard" size={18} color={colors.white} />}
             onPress={() => router.push("/todo")}
           />
         </View>
@@ -41,7 +41,7 @@ export default function HomeScreen() {
             <PillButton
               label="설정"
               variant="ghost"
-              icon={<Ionicons name="settings-outline" size={14} color={colors.soft} />}
+              icon={<Ionicons name="settings-sharp" size={15} color={colors.soft} />}
               onPress={() => router.push("/settings")}
             />
           </View>
