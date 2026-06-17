@@ -6,16 +6,21 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { Logo } from "@/components/Logo";
 import { Screen } from "@/components/Screen";
+import { useAuth } from "@/context/AuthContext";
 import { colors, typography } from "@/theme/colors";
 
 export default function SplashScreen() {
+  const { initializing, user } = useAuth();
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace("/home");
+      if (!initializing) {
+        router.replace(user ? "/home" : "/login");
+      }
     }, 1500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [initializing, user]);
 
   return (
     <Screen>

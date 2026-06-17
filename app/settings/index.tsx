@@ -3,9 +3,12 @@ import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { Logo } from "@/components/Logo";
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
+import { useAuth } from "@/context/AuthContext";
 import { colors, typography } from "@/theme/colors";
 
 export default function SettingsScreen() {
+  const { logout, user } = useAuth();
+
   return (
     <Screen contentStyle={styles.screen}>
       <PageTransition>
@@ -16,7 +19,7 @@ export default function SettingsScreen() {
 
         <View style={styles.card}>
           <Text style={styles.cardTitle}>워치 전용 최소 설정</Text>
-          <Text style={styles.cardText}>폰 앱에서 더 많은 설정을 확인할 수 있습니다.</Text>
+          <Text style={styles.cardText}>{user?.email ?? "로그인 정보를 확인할 수 없습니다."}</Text>
         </View>
 
         <Pressable
@@ -24,6 +27,10 @@ export default function SettingsScreen() {
           onPress={() => Alert.alert("폰에서 보기", "추후 폰 앱과 연결되는 동작을 여기에 연결할 수 있습니다.")}
         >
           <Text style={styles.phoneButtonText}>폰에서 보기</Text>
+        </Pressable>
+
+        <Pressable style={styles.logoutButton} onPress={logout}>
+          <Text style={styles.logoutButtonText}>로그아웃</Text>
         </Pressable>
       </PageTransition>
     </Screen>
@@ -77,6 +84,19 @@ const styles = StyleSheet.create({
   },
   phoneButtonText: {
     color: colors.black,
+    fontSize: 13,
+    fontFamily: typography.bold
+  },
+  logoutButton: {
+    borderWidth: 1,
+    borderColor: colors.borderSoft,
+    borderRadius: 999,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 11
+  },
+  logoutButtonText: {
+    color: colors.soft,
     fontSize: 13,
     fontFamily: typography.bold
   }

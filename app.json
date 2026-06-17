@@ -2,7 +2,7 @@
   "expo": {
     "name": "WatchDay",
     "slug": "watchday2",
-    "scheme": "watchday2",
+    "scheme": "dailysunrin",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
