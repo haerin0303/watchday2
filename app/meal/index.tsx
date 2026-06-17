@@ -67,11 +67,13 @@ export default function MealScreen() {
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.list}
             renderItem={({ item }) => (
-              <View style={styles.menuCard}>
+              <View style={styles.menuRow}>
                 <Text style={styles.menuText}>{item.name}</Text>
-                <Pressable style={styles.infoButton} onPress={() => router.push(`/meal/allergy/${item.id}`)}>
-                  <Ionicons name="information-circle" size={20} color={colors.orange} />
-                </Pressable>
+                {item.allergyNumbers === "알레르기 정보 없음" ? null : (
+                  <Pressable style={styles.infoButton} onPress={() => router.push(`/meal/allergy/${item.id}`)}>
+                    <Ionicons name="information-circle" size={15} color={colors.orange} />
+                  </Pressable>
+                )}
               </View>
             )}
           />
@@ -83,12 +85,12 @@ export default function MealScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 10,
+    paddingTop: 46,
     paddingBottom: 10
   },
   header: {
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 32,
     gap: 4
   },
   title: {
@@ -98,41 +100,36 @@ const styles = StyleSheet.create({
     fontFamily: typography.bold
   },
   date: {
-    color: colors.gold,
-    fontSize: 12,
-    fontFamily: typography.medium
+    color: colors.soft,
+    fontSize: 18,
+    lineHeight: 23,
+    fontFamily: typography.bold
   },
   list: {
-    gap: 8,
+    gap: 17,
     paddingBottom: 4
   },
-  menuCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 26,
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+  menuRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8
+    gap: 8,
+    paddingHorizontal: 8
   },
   menuText: {
     color: colors.white,
-    fontSize: 16,
-    lineHeight: 20,
-    fontFamily: typography.medium,
+    fontSize: 14,
+    lineHeight: 19,
+    fontFamily: typography.bold,
     textAlign: "center",
     flexShrink: 1
   },
   infoButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.surfaceElevated
+    justifyContent: "center"
   },
   emptyBox: {
     flex: 1,

@@ -1,12 +1,48 @@
-import { router, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
 import { getCachedTodayMeal, loadTodayMeal, MealData } from "@/services/meal";
 import { usePhoneViewTarget } from "@/services/phoneView";
 import { colors, typography } from "@/theme/colors";
+
+const ALLERGY_LABELS: Record<string, string> = {
+  "1": "난류",
+  "2": "우유",
+  "3": "메밀",
+  "4": "땅콩",
+  "5": "대두",
+  "6": "밀",
+  "7": "고등어",
+  "8": "게",
+  "9": "새우",
+  "10": "돼지고기",
+  "11": "복숭아",
+  "12": "토마토",
+  "13": "아황산류",
+  "14": "호두",
+  "15": "닭고기",
+  "16": "쇠고기",
+  "17": "오징어",
+  "18": "조개류",
+  "19": "잣"
+};
+
+function formatAllergyText(allergyCode?: string) {
+  if (!allergyCode || allergyCode === "알레르기 정보 없음") {
+    return "알레르기 정보 없음";
+  }
+
+  const items = allergyCode
+    .split(/[.,/ ]+/)
+    .map((code) => code.trim())
+    .filter((code) => code.length > 0)
+    .map((code) => `${code} ${ALLERGY_LABELS[code] ?? "알레르기"}`);
+
+  return items.length > 0 ? items.join(" / ") : "알레르기 정보 없음";
+}
 
 export default function MealAllergyDetailScreen() {
   usePhoneViewTarget("meal");
@@ -47,25 +83,19 @@ export default function MealAllergyDetailScreen() {
   }, [meal]);
 
   const menu = useMemo(() => meal?.items.find((item) => item.id === params.mealId) ?? meal?.items[0] ?? null, [meal?.items, params.mealId]);
-  const allergyText = menu ? `${menu.name} - ${menu.allergyNumbers}` : fallbackText;
+  const allergyText = menu ? formatAllergyText(menu.allergyNumbers) : fallbackText;
 
   return (
     <Screen contentStyle={styles.screen}>
       <PageTransition>
         <View style={styles.header}>
-          <Text style={styles.title}>알레르기 정보</Text>
-          <Text style={styles.subtitle}>{menu?.name ?? ""}</Text>
+          <Text style={styles.title}>급식</Text>
+          <Text style={styles.date}>{meal?.date ?? ""}</Text>
         </View>
 
-        <View style={styles.card}>
-          <Text style={styles.label}>알레르기 번호</Text>
+        <View style={styles.allergyArea}>
           <Text style={styles.value}>{allergyText}</Text>
-          <Text style={styles.note}>{menu?.warning ?? fallbackText}</Text>
         </View>
-
-        <Pressable style={styles.closeButton} onPress={() => router.back()}>
-          <Text style={styles.closeText}>닫기</Text>
-        </Pressable>
       </PageTransition>
     </Screen>
   );
@@ -73,65 +103,37 @@ export default function MealAllergyDetailScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 10,
-    paddingBottom: 14,
-    justifyContent: "space-between"
+    paddingTop: 46,
+    paddingBottom: 10
   },
   header: {
     alignItems: "center",
+    marginBottom: 32,
     gap: 4
   },
   title: {
     color: colors.white,
-    fontSize: 22,
+    fontSize: 24,
+    lineHeight: 28,
     fontFamily: typography.bold,
     textAlign: "center"
   },
-  subtitle: {
-    color: colors.gold,
-    fontSize: 12,
-    fontFamily: typography.medium,
-    textAlign: "center"
-  },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: 26,
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingHorizontal: 16,
-    paddingVertical: 18,
-    alignItems: "center",
-    gap: 8
-  },
-  label: {
+  date: {
     color: colors.soft,
-    fontSize: 11,
-    fontFamily: typography.medium,
-    letterSpacing: 0.8
+    fontSize: 18,
+    lineHeight: 23,
+    fontFamily: typography.bold
+  },
+  allergyArea: {
+    alignItems: "center",
+    paddingHorizontal: 24,
+    marginTop: 8
   },
   value: {
-    color: colors.orange,
-    fontSize: 22,
-    fontFamily: typography.bold,
+    color: colors.soft,
+    fontSize: 14,
+    lineHeight: 19,
+    fontFamily: typography.medium,
     textAlign: "center"
-  },
-  note: {
-    color: colors.white,
-    fontSize: 12,
-    lineHeight: 17,
-    textAlign: "center",
-    fontFamily: typography.medium
-  },
-  closeButton: {
-    backgroundColor: colors.surfaceElevated,
-    borderRadius: 999,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12
-  },
-  closeText: {
-    color: colors.gold,
-    fontSize: 13,
-    fontFamily: typography.medium
   }
 });

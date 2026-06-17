@@ -132,9 +132,8 @@ function formatMealDate(date: unknown) {
   }
 
   const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
-  const year = source.getFullYear();
-  const month = `${source.getMonth() + 1}`.padStart(2, "0");
-  const day = `${source.getDate()}`.padStart(2, "0");
+  const month = source.getMonth() + 1;
+  const day = source.getDate();
 
-  return `${year}.${month}.${day} (${weekdays[source.getDay()]})`;
+  return `${month}/${day}(${weekdays[source.getDay()]})`;
 }

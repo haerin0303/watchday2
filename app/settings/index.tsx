@@ -1,35 +1,30 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { Logo } from "@/components/Logo";
 import { PageTransition } from "@/components/PageTransition";
 import { Screen } from "@/components/Screen";
-import { useAuth } from "@/context/AuthContext";
 import { openCurrentPhoneView } from "@/services/phoneView";
 import { colors, typography } from "@/theme/colors";
 
 export default function SettingsScreen() {
-  const { logout, user } = useAuth();
-
   return (
     <Screen contentStyle={styles.screen}>
       <PageTransition>
-        <View style={styles.header}>
-          <Logo small />
-          <Text style={styles.title}>설정</Text>
+        <View style={styles.content}>
+          <View style={styles.logoRow}>
+            <View style={styles.logoMark}>
+              <View style={styles.logoMarkStem} />
+              <View style={styles.logoMarkTop} />
+              <View style={styles.logoMarkSlash} />
+            </View>
+            <Text style={styles.logoText}>ologio</Text>
+          </View>
+
+          <Pressable style={styles.phoneButton} onPress={openCurrentPhoneView}>
+            <Ionicons name="phone-portrait-outline" size={28} color={colors.white} />
+            <Text style={styles.phoneButtonText}>폰에서 보기</Text>
+          </Pressable>
         </View>
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>워치 전용 최소 설정</Text>
-          <Text style={styles.cardText}>{user?.email ?? "로그인 정보를 확인할 수 없습니다."}</Text>
-        </View>
-
-        <Pressable style={styles.phoneButton} onPress={openCurrentPhoneView}>
-          <Text style={styles.phoneButtonText}>폰에서 보기</Text>
-        </Pressable>
-
-        <Pressable style={styles.logoutButton} onPress={logout}>
-          <Text style={styles.logoutButtonText}>로그아웃</Text>
-        </Pressable>
       </PageTransition>
     </Screen>
   );
@@ -37,65 +32,69 @@ export default function SettingsScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 10,
-    paddingBottom: 14,
-    justifyContent: "space-between"
+    justifyContent: "center"
   },
-  header: {
+  content: {
+    flex: 1,
     alignItems: "center",
-    gap: 6
+    justifyContent: "center",
+    transform: [{ translateY: -12 }]
   },
-  title: {
+  logoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 11,
+    marginBottom: 38
+  },
+  logoMark: {
+    width: 37,
+    height: 36
+  },
+  logoMarkStem: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    width: 13,
+    height: 36,
+    backgroundColor: "#FF8A1C"
+  },
+  logoMarkTop: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+    width: 36,
+    height: 13,
+    backgroundColor: "#FF8A1C"
+  },
+  logoMarkSlash: {
+    position: "absolute",
+    left: 12,
+    top: 15,
+    width: 31,
+    height: 13,
+    backgroundColor: "#FF8A1C",
+    transform: [{ rotate: "45deg" }]
+  },
+  logoText: {
     color: colors.white,
-    fontSize: 22,
+    fontSize: 30,
+    lineHeight: 34,
     fontFamily: typography.bold
-  },
-  card: {
-    backgroundColor: colors.surface,
-    borderRadius: 26,
-    borderWidth: 1,
-    borderColor: colors.border,
-    paddingHorizontal: 16,
-    paddingVertical: 18,
-    gap: 6,
-    alignItems: "center"
-  },
-  cardTitle: {
-    color: colors.gold,
-    fontSize: 15,
-    fontFamily: typography.medium,
-    textAlign: "center"
-  },
-  cardText: {
-    color: colors.white,
-    fontSize: 12,
-    lineHeight: 17,
-    textAlign: "center",
-    fontFamily: typography.medium
   },
   phoneButton: {
-    backgroundColor: colors.gold,
+    width: "100%",
+    maxWidth: 340,
+    minHeight: 84,
+    backgroundColor: "#24211F",
     borderRadius: 999,
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12
+    gap: 14
   },
   phoneButtonText: {
-    color: colors.black,
-    fontSize: 13,
-    fontFamily: typography.bold
-  },
-  logoutButton: {
-    borderWidth: 1,
-    borderColor: colors.borderSoft,
-    borderRadius: 999,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 11
-  },
-  logoutButtonText: {
-    color: colors.soft,
-    fontSize: 13,
+    color: colors.white,
+    fontSize: 19,
     fontFamily: typography.bold
   }
 });
