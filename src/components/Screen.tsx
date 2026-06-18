@@ -12,15 +12,14 @@ type ScreenProps = {
 };
 
 export function Screen({ children, scroll = false, contentStyle }: ScreenProps) {
-  const { width } = useWindowDimensions();
-  const isWatchPreview = width >= 380;
-  const frameWidth = isWatchPreview ? Math.min(450, width) : width;
-  const frameRadius = isWatchPreview ? frameWidth / 2 : 0;
+  const { width, height } = useWindowDimensions();
+  const frameSize = Math.min(width, height, 396);
+  const frameRadius = frameSize / 2;
 
   if (scroll) {
     return (
       <SafeAreaView style={styles.safeArea} edges={["top", "bottom"]}>
-        <View style={[styles.frame, { width: frameWidth, borderRadius: frameRadius }]}>
+        <View style={[styles.frame, { width: frameSize, height: frameSize, borderRadius: frameRadius }]}>
           <ScrollView
             contentContainerStyle={[styles.scrollContent, contentStyle]}
             showsVerticalScrollIndicator={false}
@@ -35,7 +34,7 @@ export function Screen({ children, scroll = false, contentStyle }: ScreenProps) 
 
   return (
     <SafeAreaView style={styles.safeArea} edges={["top", "bottom"]}>
-      <View style={[styles.frame, { width: frameWidth, borderRadius: frameRadius }]}>
+      <View style={[styles.frame, { width: frameSize, height: frameSize, borderRadius: frameRadius }]}>
         <View style={[styles.container, contentStyle]}>{children}</View>
       </View>
     </SafeAreaView>
@@ -45,10 +44,11 @@ export function Screen({ children, scroll = false, contentStyle }: ScreenProps) 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.black
+    backgroundColor: colors.black,
+    alignItems: "center",
+    justifyContent: "center"
   },
   frame: {
-    flex: 1,
     alignSelf: "center",
     backgroundColor: colors.black,
     overflow: "hidden"
@@ -56,11 +56,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.black,
-    paddingHorizontal: 24
+    paddingHorizontal: 42
   },
   scrollContent: {
     flexGrow: 1,
     backgroundColor: colors.black,
-    paddingHorizontal: 24
+    paddingHorizontal: 42
   }
 });

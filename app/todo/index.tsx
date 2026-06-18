@@ -70,8 +70,12 @@ export default function TodoScreen() {
                 <Pressable style={[styles.todoCard, item.done && styles.todoCardDone]} onPress={() => router.push(`/todo/${item.id}`)}>
                   <View style={[styles.subjectDot, { backgroundColor: subjectColor }]} />
                   <View style={styles.todoTextArea}>
-                    <Text style={[styles.todoSub, { color: subjectColor, marginTop: 0, marginBottom: 2 }]}>{item.subject}</Text>
-                    <Text style={[styles.todoTitle, item.done && styles.todoTitleDone]}>{item.title}</Text>
+                    <Text style={[styles.todoSub, { color: subjectColor, marginTop: 0, marginBottom: 2 }]} numberOfLines={1} ellipsizeMode="tail">
+                      {item.subject}
+                    </Text>
+                    <Text style={[styles.todoTitle, item.done && styles.todoTitleDone]} numberOfLines={2} ellipsizeMode="tail">
+                      {item.title}
+                    </Text>
                   </View>
                 </Pressable>
               );
@@ -85,33 +89,34 @@ export default function TodoScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 10,
-    paddingBottom: 10
+    paddingTop: 38,
+    paddingBottom: 34
   },
   header: {
     alignItems: "center",
-    marginBottom: 10
+    marginBottom: 12
   },
   title: {
     color: colors.white,
-    fontSize: 24,
-    lineHeight: 28,
+    fontSize: 21,
+    lineHeight: 25,
     fontFamily: typography.bold
   },
   list: {
-    gap: 8,
+    gap: 7,
     paddingBottom: 4
   },
   todoCard: {
     backgroundColor: colors.surface,
-    borderRadius: 26,
+    borderRadius: 22,
     borderWidth: 1,
     borderColor: colors.border,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: 13,
+    paddingVertical: 10,
     flexDirection: "row",
     alignItems: "center",
-    gap: 10
+    gap: 8,
+    minHeight: 62
   },
   check: {
     width: 28,
@@ -127,10 +132,10 @@ const styles = StyleSheet.create({
     opacity: 0.45
   },
   subjectDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 8,
-    marginRight: 12
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 6
   },
   checkDone: {
     borderColor: colors.gold,
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 15,
     fontFamily: typography.medium,
-    lineHeight: 19
+    lineHeight: 18
   },
   todoTitleDone: {
     textDecorationLine: "line-through"
@@ -157,7 +162,7 @@ const styles = StyleSheet.create({
   todoSub: {
     color: colors.soft,
   
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: typography.medium,
     marginTop: 4
   },
@@ -169,7 +174,7 @@ const styles = StyleSheet.create({
   },
   doneTitle: {
     color: colors.gold,
-    fontSize: 26,
+    fontSize: 22,
     fontFamily: typography.bold,
     textAlign: "center"
   },

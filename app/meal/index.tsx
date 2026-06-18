@@ -68,10 +68,12 @@ export default function MealScreen() {
             contentContainerStyle={styles.list}
             renderItem={({ item }) => (
               <View style={styles.menuRow}>
-                <Text style={styles.menuText}>{item.name}</Text>
+                <Text style={styles.menuText} numberOfLines={2} ellipsizeMode="tail">
+                  {item.name}
+                </Text>
                 {item.allergyNumbers === "알레르기 정보 없음" ? null : (
                   <Pressable style={styles.infoButton} onPress={() => router.push(`/meal/allergy/${item.id}`)}>
-                    <Ionicons name="alert-circle-outline" size={16} color={colors.orange} />
+                    <Ionicons name="alert-circle-outline" size={18} color={colors.orange} />
                   </Pressable>
                 )}
               </View>
@@ -85,51 +87,54 @@ export default function MealScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 46,
-    paddingBottom: 10
+    paddingTop: 42,
+    paddingBottom: 36
   },
   header: {
     alignItems: "center",
-    marginBottom: 32,
+    marginBottom: 20,
     gap: 4
   },
   title: {
     color: colors.white,
-    fontSize: 24,
-    lineHeight: 28,
+    fontSize: 21,
+    lineHeight: 25,
     fontFamily: typography.bold
   },
   date: {
     color: colors.soft,
-    fontSize: 18,
-    lineHeight: 23,
+    fontSize: 13,
+    lineHeight: 17,
     fontFamily: typography.bold
   },
   list: {
-    gap: 17,
+    gap: 10,
     paddingBottom: 4
   },
   menuRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
-    paddingHorizontal: 8
+    gap: 7,
+    paddingHorizontal: 2,
+    minHeight: 42
   },
   menuText: {
     color: colors.white,
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: 13,
+    lineHeight: 18,
     fontFamily: typography.bold,
     textAlign: "center",
-    flexShrink: 1
+    flexShrink: 1,
+    maxWidth: 206
   },
   infoButton: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: colors.backgroundThird
   },
   emptyBox: {
     flex: 1,

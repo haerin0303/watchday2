@@ -8,7 +8,7 @@ import { colors, typography } from "@/theme/colors";
 
 export default function SettingsScreen() {
   return (
-    <Screen contentStyle={styles.screen}>
+    <Screen scroll contentStyle={styles.screen}>
       <PageTransition>
         <View style={styles.content}>
           <View style={styles.logoRow}>
@@ -35,66 +35,68 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   content: {
-    flex: 1,
+    minHeight: 270,
     alignItems: "center",
     justifyContent: "center",
-    transform: [{ translateY: -12 }]
+    paddingTop: 34,
+    paddingBottom: 34
   },
   logoRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 11,
-    marginBottom: 38
+    gap: 9,
+    marginBottom: 26
   },
   logoMark: {
-    width: 37,
-    height: 36
+    width: 30,
+    height: 29
   },
   logoMarkStem: {
     position: "absolute",
     left: 0,
     top: 0,
-    width: 13,
-    height: 36,
+    width: 10,
+    height: 29,
     backgroundColor: colors.brandPrimary
   },
   logoMarkTop: {
     position: "absolute",
     left: 0,
     top: 0,
-    width: 36,
-    height: 13,
+    width: 29,
+    height: 10,
     backgroundColor: colors.brandPrimary
   },
   logoMarkSlash: {
     position: "absolute",
-    left: 12,
-    top: 15,
-    width: 31,
-    height: 13,
+    left: 10,
+    top: 12,
+    width: 25,
+    height: 10,
     backgroundColor: colors.brandPrimary,
     transform: [{ rotate: "45deg" }]
   },
   logoText: {
     color: colors.white,
-    fontSize: 30,
-    lineHeight: 34,
+    fontSize: 25,
+    lineHeight: 29,
     fontFamily: typography.bold
   },
   phoneButton: {
     width: "100%",
-    maxWidth: 340,
-    minHeight: 84,
+    maxWidth: 270,
+    minHeight: 70,
     backgroundColor: colors.backgroundThird,
     borderRadius: 999,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 14
+    gap: 10,
+    paddingHorizontal: 18
   },
   phoneButtonText: {
     color: colors.white,
-    fontSize: 19,
+    fontSize: 17,
     fontFamily: typography.bold
   }
 });

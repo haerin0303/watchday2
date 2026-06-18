@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch"
   },
   base: {
-    minHeight: 90,
+    minHeight: 66,
     borderRadius: 999,
     alignItems: "center",
     justifyContent: "center",
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   primaryLabel: {
     color: colors.white,
-    fontSize: 17,
+    fontSize: 16,
     fontFamily: typography.bold,
     letterSpacing: 0.1
   },

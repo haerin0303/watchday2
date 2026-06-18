@@ -41,7 +41,7 @@ function formatAllergyText(allergyCode?: string) {
     .filter((code) => code.length > 0)
     .map((code) => `${code} ${ALLERGY_LABELS[code] ?? "알레르기"}`);
 
-  return items.length > 0 ? items.join(" / ") : "알레르기 정보 없음";
+  return items.length > 0 ? items.join("\n") : "알레르기 정보 없음";
 }
 
 export default function MealAllergyDetailScreen() {
@@ -86,7 +86,7 @@ export default function MealAllergyDetailScreen() {
   const allergyText = menu ? formatAllergyText(menu.allergyNumbers) : fallbackText;
 
   return (
-    <Screen contentStyle={styles.screen}>
+    <Screen scroll contentStyle={styles.screen}>
       <PageTransition>
         <View style={styles.header}>
           <Text style={styles.title}>급식</Text>
@@ -103,36 +103,43 @@ export default function MealAllergyDetailScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 46,
-    paddingBottom: 10
+    paddingTop: 42,
+    paddingBottom: 36
   },
   header: {
     alignItems: "center",
-    marginBottom: 32,
+    marginBottom: 18,
     gap: 4
   },
   title: {
     color: colors.white,
-    fontSize: 24,
-    lineHeight: 28,
+    fontSize: 21,
+    lineHeight: 25,
     fontFamily: typography.bold,
     textAlign: "center"
   },
   date: {
     color: colors.soft,
-    fontSize: 18,
-    lineHeight: 23,
+    fontSize: 13,
+    lineHeight: 17,
     fontFamily: typography.bold
   },
   allergyArea: {
     alignItems: "center",
-    paddingHorizontal: 24,
-    marginTop: 8
+    backgroundColor: colors.backgroundThird,
+    borderColor: colors.borderPrimary,
+    borderWidth: 1,
+    borderRadius: 22,
+    paddingHorizontal: 18,
+    paddingVertical: 18,
+    marginTop: 4,
+    minHeight: 118,
+    justifyContent: "center"
   },
   value: {
     color: colors.soft,
-    fontSize: 14,
-    lineHeight: 19,
+    fontSize: 13,
+    lineHeight: 20,
     fontFamily: typography.medium,
     textAlign: "center"
   }

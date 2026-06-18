@@ -54,10 +54,12 @@ export default function TodoDetailScreen() {
     : message;
 
   return (
-    <Screen contentStyle={styles.screen}>
+    <Screen scroll contentStyle={styles.screen}>
       <PageTransition>
         <View style={styles.centerFull}>
-          <Text style={[styles.bigTitle, { color: subjectColor }]}>{todo?.title ?? message}</Text>
+          <Text style={[styles.bigTitle, { color: subjectColor }]} numberOfLines={3} ellipsizeMode="tail">
+            {todo?.title ?? message}
+          </Text>
           <Text style={styles.smallSub}>{detailText}</Text>
         </View>
       </PageTransition>
@@ -67,9 +69,9 @@ export default function TodoDetailScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 14,
-    paddingBottom: 18,
-    justifyContent: "space-between"
+    paddingTop: 42,
+    paddingBottom: 36,
+    justifyContent: "center"
   },
   header: {
     alignItems: "center"
@@ -138,23 +140,25 @@ const styles = StyleSheet.create({
   }
   ,
   centerFull: {
-    flex: 1,
+    minHeight: 246,
     alignItems: "center",
     justifyContent: "center"
   },
   bigTitle: {
     color: colors.gold,
-    fontSize: 28,
-    lineHeight: 34,
+    fontSize: 24,
+    lineHeight: 30,
     fontFamily: typography.bold,
-    textAlign: "center"
+    textAlign: "center",
+    maxWidth: 250
   },
   smallSub: {
     color: colors.soft,
-    fontSize: 14,
-    lineHeight: 20,
-    marginTop: 16,
+    fontSize: 13,
+    lineHeight: 19,
+    marginTop: 14,
     textAlign: "center",
-    fontFamily: typography.medium
+    fontFamily: typography.medium,
+    maxWidth: 246
   }
 });

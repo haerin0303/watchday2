@@ -53,14 +53,14 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 12,
-    paddingBottom: 12,
+    paddingTop: 38,
+    paddingBottom: 34,
     justifyContent: "space-between",
-    maxWidth: 400
+    maxWidth: 396
   },
   topArea: {
     alignItems: "center",
-    marginTop: 8
+    marginTop: 0
   },
   brand: {
     color: colors.white,
@@ -71,15 +71,13 @@ const styles = StyleSheet.create({
     fontFamily: typography.medium
   },
   menuArea: {
-    gap: 14,
-    marginTop: 16
+    gap: 10,
+    marginTop: 12
   },
   footer: {
     alignItems: "center",
     paddingBottom: 0,
-    // width: "100%",
-    // paddingHorizontal: 14,
-    marginTop: 8
+    marginTop: 10
   },
   footerButtonWrap: {
     width: "100%"

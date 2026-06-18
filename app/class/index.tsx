@@ -313,9 +313,17 @@ export default function ClassScreen() {
               <Text style={styles.timeLabel}>{current.time}</Text>
             </View>
 
-            <Text style={styles.period}>{current.period}</Text>
-            <Text style={styles.subject}>{current.subject}</Text>
-            {current.room ? <Text style={styles.room}>{current.room}</Text> : null}
+            <Text style={styles.period} numberOfLines={1} adjustsFontSizeToFit>
+              {current.period}
+            </Text>
+            <Text style={styles.subject} numberOfLines={2} ellipsizeMode="tail">
+              {current.subject}
+            </Text>
+            {current.room ? (
+              <Text style={styles.room} numberOfLines={1} ellipsizeMode="tail">
+                {current.room}
+              </Text>
+            ) : null}
           </View>
         </View>
       </PageTransition>
@@ -325,13 +333,13 @@ export default function ClassScreen() {
 
 const styles = StyleSheet.create({
   screen: {
-    paddingTop: 8,
-    paddingBottom: 12,
+    paddingTop: 38,
+    paddingBottom: 34,
     justifyContent: "center"
   },
   content: {
     flex: 1,
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center"
   },
   header: {
@@ -342,45 +350,53 @@ const styles = StyleSheet.create({
   headerInline: {
     alignItems: "center",
     gap: 6,
-    marginBottom: 18
+    marginBottom: 34
   },
   title: {
     color: colors.white,
-    fontSize: 15,
-    lineHeight: 18,
+    fontSize: 18,
+    lineHeight: 22,
     fontFamily: typography.bold,
     letterSpacing: 0.2
   },
   timeLabel: {
     color: colors.textSecondary,
-    fontSize: 13,
+    fontSize: 18,
+    lineHeight: 23,
     fontFamily: typography.medium,
-    letterSpacing: 0.1
+    letterSpacing: 0.1,
+    maxWidth: 190
   },
   centerBlock: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    transform: [{ translateY: -8 }]
+    width: "100%",
+    paddingTop: 4
   },
   period: {
-    color: colors.brandPrimary,
-    fontSize: 13,
+    color: colors.white,
+    fontSize: 18,
+    lineHeight: 23,
     fontFamily: typography.medium,
     marginBottom: 10,
     letterSpacing: 0.1
   },
   subject: {
     color: colors.brandPrimary,
-    fontSize: 52,
-    lineHeight: 60,
+    fontSize: 48,
+    lineHeight: 56,
     fontFamily: typography.bold,
-    textAlign: "center"
+    textAlign: "center",
+    maxWidth: 250
   },
   room: {
     color: colors.textSecondary,
-    fontSize: 15,
-    marginTop: 10,
-    fontFamily: typography.medium
+    fontSize: 21,
+    lineHeight: 26,
+    marginTop: 6,
+    fontFamily: typography.medium,
+    maxWidth: 220,
+    textAlign: "center"
   }
 });
